@@ -25,6 +25,9 @@ public class Player : MonoBehaviour
     private float _playerMaxY = 1f;
     private float _playerMinY = -4.5f;
 
+    [SerializeField]
+    private int _lives = 3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,5 +83,18 @@ public class Player : MonoBehaviour
         _canFire = Time.time + _fireRate;
         Vector3 offsetPosition = new Vector3(0, _laserOffset, 0);
         Instantiate(_laser, transform.position + offsetPosition, Quaternion.identity);
+    }
+
+    public void DamagePlayer() {
+        _lives--;
+        //update UI once we have
+        CheckLives();
+    }
+
+    private void CheckLives() {
+        if (_lives == 0) {
+            Destroy(gameObject);
+        }
+        
     }
 }
