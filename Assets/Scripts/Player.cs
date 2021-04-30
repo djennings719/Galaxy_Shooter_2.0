@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
 
-    private float _laserOffset = 0.8f;
+    private float _laserOffset = 1.05f;
 
     private float _playerMaxX = 11.5f;
     private float _playerMinX = -11.5f;
@@ -28,9 +28,17 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
 
+    private SpawnManager _spawnManager;
+
+    private bool isTripleShotEnabled;
+
     // Start is called before the first frame update
     void Start()
     {
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        if (_spawnManager == null) {
+            Debug.Log("SpawnManager not found.");
+        }
         SetPlayerStartingLocation();
         if (_laser == null) {
             Debug.Log("Laser GameObject has not been set.  Please set GameObject and try again.");
@@ -87,14 +95,14 @@ public class Player : MonoBehaviour
 
     public void DamagePlayer() {
         _lives--;
-        //update UI once we have
+        //update UI once we have UI components
         CheckLives();
     }
 
     private void CheckLives() {
         if (_lives == 0) {
+            _spawnManager.IsAlive = false;
             Destroy(gameObject);
-        }
-        
+        }        
     }
 }
