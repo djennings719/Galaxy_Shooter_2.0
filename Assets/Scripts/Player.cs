@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     private float _verticalSpeed = 1.5f;
 
     [SerializeField]
-    private GameObject _laser;
+    private GameObject _laserPrefab;
 
     [SerializeField]
     private float _fireRate = 0.5f;
@@ -29,8 +29,13 @@ public class Player : MonoBehaviour
     private int _lives = 3;
 
     private SpawnManager _spawnManager;
+    [SerializeField]
+    private bool _isTripleShotEnabled;
 
-    private bool isTripleShotEnabled;
+    [SerializeField]
+    private GameObject _tripleShotPrefab;
+
+    public enum PowerUps { TripleShot, Shields, SpeedBoost }
 
     // Start is called before the first frame update
     void Start()
@@ -40,8 +45,12 @@ public class Player : MonoBehaviour
             Debug.Log("SpawnManager not found.");
         }
         SetPlayerStartingLocation();
-        if (_laser == null) {
+        if (_laserPrefab == null) {
             Debug.Log("Laser GameObject has not been set.  Please set GameObject and try again.");
+        }
+
+        if (_tripleShotPrefab == null) {
+            Debug.Log("TripleShot GameObject has not been set.  Please set the GameObject and try again.");
         }
     }
 
@@ -90,7 +99,7 @@ public class Player : MonoBehaviour
     private void FireLaser() {    
         _canFire = Time.time + _fireRate;
         Vector3 offsetPosition = new Vector3(0, _laserOffset, 0);
-        Instantiate(_laser, transform.position + offsetPosition, Quaternion.identity);
+        Instantiate(_isTripleShotEnabled ? _tripleShotPrefab : _laserPrefab, transform.position + offsetPosition, Quaternion.identity);
     }
 
     public void DamagePlayer() {
@@ -104,5 +113,27 @@ public class Player : MonoBehaviour
             _spawnManager.IsAlive = false;
             Destroy(gameObject);
         }        
+    }
+
+    public void SetPowerUp(PowerUps powerUp) {
+
+        switch (powerUp) {
+            case PowerUps.TripleShot:
+                _isTripleShotEnabled = true;
+                StartCoroutine(TripleShotPowerDown());
+                break;
+            case PowerUps.Shields:
+                break;
+            case PowerUps.SpeedBoost:
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    IEnumerator TripleShotPowerDown() {
+        yield return new WaitForSeconds(Random.Range(1.2f, 5.5f));        
+        _isTripleShotEnabled = false;
     }
 }

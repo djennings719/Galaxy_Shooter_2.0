@@ -8,6 +8,8 @@ public class SpawnManager : MonoBehaviour
     private GameObject _spawnObject;
     [SerializeField]
     private GameObject _newParent;
+    [SerializeField]
+    private GameObject _tripleShot;
 
     private IEnumerator coroutine;
 
@@ -27,8 +29,12 @@ public class SpawnManager : MonoBehaviour
         if (_newParent == null) {
             Debug.Log("You have not selected a GameObject to parent.  Please supply an object and try again.");
         }
+        if (_tripleShot == null) {
+            Debug.Log("You have not selected a GameObject to tripeShot.  Please supply an object and try again.");
+        }
 
-        StartCoroutine(SpawnAndWait());
+        StartCoroutine(SpawnEnemyAndWait());
+        StartCoroutine(SpawnPowerUps());
     }
 
     // Update is called once per frame
@@ -37,12 +43,20 @@ public class SpawnManager : MonoBehaviour
         
     }
 
-    IEnumerator SpawnAndWait()
+    IEnumerator SpawnEnemyAndWait()
     {
         while (_isAlive)
         {
             Instantiate(_spawnObject,_newParent.transform);
             yield return new WaitForSeconds(Random.Range(0.5f, 5f));        
+        }
+    }
+
+    IEnumerator SpawnPowerUps() {
+        while (_isAlive)
+        {
+            Instantiate(_tripleShot);
+            yield return new WaitForSeconds(Random.Range(1.5f, 8.0f));            
         }
     }
 }
