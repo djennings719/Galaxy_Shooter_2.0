@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
+    public enum PowerUpTags { TripleShotPowerUp, SpeedBoostPowerUp, ShieldsPowerUp }
+
     // Update is called once per frame
     void Update()
     {
@@ -11,7 +14,7 @@ public class PowerUp : MonoBehaviour
     }
 
     private void Movement() {
-        transform.Translate(Vector3.down * Time.deltaTime * Random.Range(0.3f, 5f));
+        transform.Translate(Vector3.down * Time.deltaTime * UnityEngine.Random.Range(0.3f, 5f));
         CheckBounds();
     }
 
@@ -26,7 +29,19 @@ public class PowerUp : MonoBehaviour
         if (other.tag == "Player") {
             Player player = other.GetComponent<Player>();
             if (player != null) {
-                player.SetPowerUp(Player.PowerUps.TripleShot);
+                switch (Enum.Parse(typeof(PowerUpTags), gameObject.tag)) {
+                    case PowerUpTags.TripleShotPowerUp:
+                        player.SetPowerUp(PowerUpTags.TripleShotPowerUp);
+                        break;
+                    case PowerUpTags.SpeedBoostPowerUp:
+                        player.SetPowerUp(PowerUpTags.SpeedBoostPowerUp);
+                        break;
+                    case PowerUpTags.ShieldsPowerUp:
+                        player.SetPowerUp(PowerUpTags.ShieldsPowerUp);
+                        break;
+                    default:
+                        break;
+                }
             }
             Destroy(gameObject);
         }

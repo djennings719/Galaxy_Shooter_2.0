@@ -27,20 +27,27 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private int _lives = 3;
+    [SerializeField]
+    private float _speedBoost = 3.0f;
 
     private SpawnManager _spawnManager;
     [SerializeField]
-    private bool _isTripleShotEnabled;
+    private bool _isTripleShotEnabled = false;
+    [SerializeField]
+    private bool _isSpeedBoostEnabled = false;
+    private bool _isShieldEnabled = false;
 
     [SerializeField]
     private GameObject _tripleShotPrefab;
-
-    public enum PowerUps { TripleShot, Shields, SpeedBoost }
-
+    [SerializeField]
+    private GameObject _shield;
+    //private GameObject _shield;
+    
     // Start is called before the first frame update
     void Start()
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        
         if (_spawnManager == null) {
             Debug.Log("SpawnManager not found.");
         }
@@ -51,6 +58,10 @@ public class Player : MonoBehaviour
 
         if (_tripleShotPrefab == null) {
             Debug.Log("TripleShot GameObject has not been set.  Please set the GameObject and try again.");
+        }
+        if (_shield == null)
+        {
+            Debug.Log("Shield GameObject has not been set.  Please set the GameObject and try again.");
         }
     }
 
@@ -77,7 +88,7 @@ public class Player : MonoBehaviour
         float vertical = Input.GetAxis("Vertical") * _verticalSpeed;
 
         Vector3 translateVector = new Vector3(horizontal, vertical, 0);
-        transform.Translate(translateVector * Time.deltaTime);
+        transform.Translate(translateVector * Time.deltaTime * (_isSpeedBoostEnabled ? _speedBoost : 1));
 
         BoundaryController();
     }
@@ -103,6 +114,12 @@ public class Player : MonoBehaviour
     }
 
     public void DamagePlayer() {
+        //simple single use shield
+        if (_isShieldEnabled) {
+            SetShieldEnabled(false);
+            return;
+        }
+
         _lives--;
         //update UI once we have UI components
         CheckLives();
@@ -115,25 +132,43 @@ public class Player : MonoBehaviour
         }        
     }
 
-    public void SetPowerUp(PowerUps powerUp) {
+    public void SetPowerUp(PowerUp.PowerUpTags powerUp) {
 
         switch (powerUp) {
-            case PowerUps.TripleShot:
+            case PowerUp.PowerUpTags.TripleShotPowerUp:
                 _isTripleShotEnabled = true;
                 StartCoroutine(TripleShotPowerDown());
                 break;
-            case PowerUps.Shields:
+            case PowerUp.PowerUpTags.SpeedBoostPowerUp:
+                _isSpeedBoostEnabled = true;
+                StartCoroutine(SpeedBoostPowerDown());
                 break;
-            case PowerUps.SpeedBoost:
+            case PowerUp.PowerUpTags.ShieldsPowerUp:
+                SetShieldEnabled(true);
+                StartCoroutine(ShieldPowerDown());
                 break;
             default:
                 break;
         }
-
     }
 
     IEnumerator TripleShotPowerDown() {
         yield return new WaitForSeconds(Random.Range(1.2f, 5.5f));        
         _isTripleShotEnabled = false;
+    }
+
+    IEnumerator SpeedBoostPowerDown() {
+        yield return new WaitForSeconds(Random.Range(1.2f, 5.5f));
+        _isSpeedBoostEnabled = false;
+    }
+
+    IEnumerator ShieldPowerDown() {
+        yield return new WaitForSeconds(Random.Range(1.2f, 5.5f));
+        SetShieldEnabled(false);
+    }
+
+    private void SetShieldEnabled(bool isEnabled) {
+        _isShieldEnabled = isEnabled;
+        _shield.SetActive(isEnabled);
     }
 }
