@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1587049122970972868}
   - component: {fileID: 7233821139541762288}
-  - component: {fileID: 6565662919936058262}
+  - component: {fileID: 3122522643831893022}
   - component: {fileID: 5812901472765159250}
   m_Layer: 0
   m_Name: Laser
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6565662919936058262
+--- !u!114 &3122522643831893022
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 190599610794939503}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54437cf4de696e941ae713b91b4adffa, type: 3}
+  m_Script: {fileID: 11500000, guid: 83be9b576f33b6d4983e9c1a7aa6a370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _laserSpeed: 3.5

@@ -41,13 +41,18 @@ public class Player : MonoBehaviour
     private GameObject _tripleShotPrefab;
     [SerializeField]
     private GameObject _shield;
-    //private GameObject _shield;
+
+    [SerializeField]
+    private int _score;
+
+    private UIManager _uiManager;
     
     // Start is called before the first frame update
     void Start()
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
         if (_spawnManager == null) {
             Debug.Log("SpawnManager not found.");
         }
@@ -63,6 +68,10 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Shield GameObject has not been set.  Please set the GameObject and try again.");
         }
+        if (_uiManager == null) {
+            Debug.Log("UI Manager has not been set.  Please set the GameObject and try again.");
+        }
+
     }
 
     // Update is called once per frame
@@ -121,6 +130,7 @@ public class Player : MonoBehaviour
         }
 
         _lives--;
+        _uiManager.UpdateLives(_lives);
         //update UI once we have UI components
         CheckLives();
     }
@@ -128,6 +138,7 @@ public class Player : MonoBehaviour
     private void CheckLives() {
         if (_lives == 0) {
             _spawnManager.IsAlive = false;
+            _uiManager.GameOver();
             Destroy(gameObject);
         }        
     }
@@ -170,5 +181,11 @@ public class Player : MonoBehaviour
     private void SetShieldEnabled(bool isEnabled) {
         _isShieldEnabled = isEnabled;
         _shield.SetActive(isEnabled);
+    }
+
+    public void UpdateScore()
+    {
+        _score += 10;
+        _uiManager.UpdateScore(_score);
     }
 }

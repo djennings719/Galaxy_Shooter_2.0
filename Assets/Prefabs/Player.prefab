@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1027402806583183945}
   - component: {fileID: 4053538829983430648}
-  - component: {fileID: 4773169422745161024}
   - component: {fileID: 1452925926914321489}
+  - component: {fileID: 832943450808941616}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -85,28 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4773169422745161024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4249042902819518361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c72da747a59c55c49bbd79c3514d7999, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _horizontalSpeed: 6
-  _verticalSpeed: 2
-  _laserPrefab: {fileID: 190599610794939503, guid: eabbfac1cb38e7f409bd263ba924d73b, type: 3}
-  _fireRate: 0.15
-  _lives: 3
-  _speedBoost: 3
-  _isTripleShotEnabled: 0
-  _isSpeedBoostEnabled: 0
-  _tripleShotPrefab: {fileID: 6696090526644287375, guid: fe84c55b8b6941840b1a4b8476c9aab3, type: 3}
-  _shieldPrefab: {fileID: 1274278320968250180, guid: cbd935a5a761a874999121c6d335619c, type: 3}
 --- !u!61 &1452925926914321489
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -133,6 +111,29 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.6340184, y: 3.1429439}
   m_EdgeRadius: 0
+--- !u!114 &832943450808941616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4249042902819518361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf326490f572ca4481692ec99ca97c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _horizontalSpeed: 6
+  _verticalSpeed: 2
+  _laserPrefab: {fileID: 190599610794939503, guid: eabbfac1cb38e7f409bd263ba924d73b, type: 3}
+  _fireRate: 0.5
+  _lives: 3
+  _speedBoost: 3
+  _isTripleShotEnabled: 0
+  _isSpeedBoostEnabled: 0
+  _tripleShotPrefab: {fileID: 6696090526644287375, guid: fe84c55b8b6941840b1a4b8476c9aab3, type: 3}
+  _shield: {fileID: 1274278320968250180, guid: cbd935a5a761a874999121c6d335619c, type: 3}
+  _score: 0
 --- !u!1001 &5339052705972150720
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -147,6 +148,18 @@ PrefabInstance:
     - target: {fileID: 9005325070806111394, guid: cbd935a5a761a874999121c6d335619c, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005325070806111394, guid: cbd935a5a761a874999121c6d335619c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005325070806111394, guid: cbd935a5a761a874999121c6d335619c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005325070806111394, guid: cbd935a5a761a874999121c6d335619c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9005325070806111394, guid: cbd935a5a761a874999121c6d335619c, type: 3}
       propertyPath: m_LocalPosition.x

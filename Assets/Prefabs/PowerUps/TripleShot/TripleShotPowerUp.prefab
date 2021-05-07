@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1902435831895200675}
   - component: {fileID: 1902435831895200674}
   - component: {fileID: 1902435831895200685}
-  - component: {fileID: 1902435831895200684}
+  - component: {fileID: 2513516494894142057}
   - component: {fileID: 1902435831895200673}
   m_Layer: 0
   m_Name: TripleShotPowerUp
@@ -123,7 +123,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1902435831895200684
+--- !u!114 &2513516494894142057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1902435831895200687}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12613b1857833cb42b3f5822d80bab65, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cefc634861bf54429af6a1e11f972a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!95 &1902435831895200673
