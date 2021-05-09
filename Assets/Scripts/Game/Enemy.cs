@@ -98,7 +98,7 @@ public class Enemy : MonoBehaviour
     }
 
     private void WaitAndDestroyEnemy() {
-        //_speed = 0.4f;
+        _speed = 0.4f;
         _animator.SetTrigger("OnEnemyDeath");
         Destroy(gameObject, _deathAnimationTime);
     }

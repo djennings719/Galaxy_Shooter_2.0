@@ -46,6 +46,12 @@ public class Player : MonoBehaviour
     private int _score;
 
     private UIManager _uiManager;
+
+    [SerializeField]
+    private GameObject _leftDamage;
+
+    [SerializeField]
+    private GameObject _rightDamage;
     
     // Start is called before the first frame update
     void Start()
@@ -72,6 +78,12 @@ public class Player : MonoBehaviour
             Debug.Log("UI Manager has not been set.  Please set the GameObject and try again.");
         }
 
+        if (_leftDamage == null) {
+            Debug.Log("Left damage object has not been set.  Please set and try again.");
+        }
+        if (_rightDamage == null) {
+            Debug.Log("Right damage object has not been set.  Please set and try again.");
+        }
     }
 
     // Update is called once per frame
@@ -131,8 +143,19 @@ public class Player : MonoBehaviour
 
         _lives--;
         _uiManager.UpdateLives(_lives);
-        //update UI once we have UI components
+        SetDamage();
         CheckLives();
+    }
+
+    private void SetDamage() {
+        if (_lives == 2)
+        {
+            _leftDamage.SetActive(true);
+        }
+        else if (_lives == 1)
+        {
+            _rightDamage.SetActive(true);
+        }
     }
 
     private void CheckLives() {

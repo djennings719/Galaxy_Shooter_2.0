@@ -10,6 +10,7 @@ TagManager:
   - SpeedBoostPowerUp
   - ShieldsPowerUp
   - Shield
+  - Asteroid
   layers:
   - Default
   - TransparentFX

@@ -34,19 +34,16 @@ public class SpawnManager : MonoBehaviour
                 Debug.Log("You have not selected a Prefab for slot number " + i + ". Please supply an object and try again.");
             }
         }
+    }
 
+    public void StartSpawning() {
         StartCoroutine(SpawnEnemyAndWait());
         StartCoroutine(SpawnPowerUps());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator SpawnEnemyAndWait()
     {
+        yield return new WaitForSeconds(Random.Range(0.5f, 3f));
         while (_isAlive)
         {
             Instantiate(_enemyPrefab,_newParentContainer.transform);
@@ -55,6 +52,7 @@ public class SpawnManager : MonoBehaviour
     }
 
     IEnumerator SpawnPowerUps() {
+        yield return new WaitForSeconds(Random.Range(0.5f, 3f));
         while (_isAlive)
         {
             Vector3 spawnLocation = new Vector3(Random.Range(-8f, 8f), Random.Range(8f, 0f), 0f);
