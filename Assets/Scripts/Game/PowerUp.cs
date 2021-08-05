@@ -6,6 +6,15 @@ using UnityEngine;
 public class PowerUp : MonoBehaviour
 {
     public enum PowerUpTags { TripleShotPowerUp, SpeedBoostPowerUp, ShieldsPowerUp }
+    [SerializeField]
+    private AudioClip _powerUpSound;
+
+    private void Start()
+    {
+        if (_powerUpSound == null) {
+            Debug.Log("Power Up Sound not found.  Please try again.");
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -42,6 +51,8 @@ public class PowerUp : MonoBehaviour
                     default:
                         break;
                 }
+                AudioSource.PlayClipAtPoint(_powerUpSound, other.transform.position);
+                //_powerUpSound.Play();
             }
             Destroy(gameObject);
         }

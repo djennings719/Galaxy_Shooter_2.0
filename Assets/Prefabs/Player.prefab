@@ -139,6 +139,8 @@ MonoBehaviour:
   _score: 0
   _leftDamage: {fileID: 7296578619617199215}
   _rightDamage: {fileID: 5312766608651633901}
+  _laserSound: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
+  _explosion: {fileID: 338870319463890037, guid: 34aba44fe5e8bf24fb3404abf28ec57d, type: 3}
 --- !u!1001 &4941628674358196922
 PrefabInstance:
   m_ObjectHideFlags: 0

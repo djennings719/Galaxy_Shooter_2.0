@@ -13,7 +13,7 @@ public class Asteroid : MonoBehaviour
     void Start()
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-
+        
         if (_explosionPrefab == null) {
             Debug.Log("Explosion Prefab has not been set.  Please set the GameObject and try again.");
         }
@@ -21,6 +21,7 @@ public class Asteroid : MonoBehaviour
         if (_spawnManager == null) {
             Debug.Log("SpawnManager not found.  Please try again.");
         }
+
     }
 
     // Update is called once per frame

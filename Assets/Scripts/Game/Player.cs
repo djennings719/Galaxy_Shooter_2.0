@@ -52,12 +52,21 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _rightDamage;
+
+    [SerializeField]
+    private AudioClip _laserSound;
+
+    private AudioSource _audioSource;
+
+    [SerializeField]
+    private GameObject _explosion;
     
     // Start is called before the first frame update
     void Start()
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _audioSource = GetComponent<AudioSource>();
 
         if (_spawnManager == null) {
             Debug.Log("SpawnManager not found.");
@@ -83,6 +92,17 @@ public class Player : MonoBehaviour
         }
         if (_rightDamage == null) {
             Debug.Log("Right damage object has not been set.  Please set and try again.");
+        }
+
+        if (_laserSound == null) {
+            Debug.Log("Laser sound clip has not been set.  Please set and try again.");
+        }
+        if (_audioSource == null)
+        {
+            Debug.Log("AudioSource not found.  Please try again.");
+        }
+        if (_explosion == null) {
+            Debug.Log("Explosion not found.  Please try again.");
         }
     }
 
@@ -132,6 +152,8 @@ public class Player : MonoBehaviour
         _canFire = Time.time + _fireRate;
         Vector3 offsetPosition = new Vector3(0, _laserOffset, 0);
         Instantiate(_isTripleShotEnabled ? _tripleShotPrefab : _laserPrefab, transform.position + offsetPosition, Quaternion.identity);
+        _audioSource.clip = _laserSound;
+        _audioSource.Play();
     }
 
     public void DamagePlayer() {
@@ -143,6 +165,7 @@ public class Player : MonoBehaviour
 
         _lives--;
         _uiManager.UpdateLives(_lives);
+        Instantiate(_explosion, transform.position, Quaternion.identity);
         SetDamage();
         CheckLives();
     }
@@ -210,5 +233,17 @@ public class Player : MonoBehaviour
     {
         _score += 10;
         _uiManager.UpdateScore(_score);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Laser")
+        {
+            Laser laser = other.GetComponent<Laser>();
+            if (laser != null && laser.IsEnemyLaser)
+            {
+                DamagePlayer();
+            }
+        }
     }
 }

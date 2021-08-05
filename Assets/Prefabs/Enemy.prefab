@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d3755b7410de84a81a32c771ade946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _laserPrefab: {fileID: 5831108175813825715, guid: 59274a18931e94246a564359b7ce877c, type: 3}
+  _laserOffset: -2.4
 --- !u!212 &4344160181154803543
 SpriteRenderer:
   m_ObjectHideFlags: 0

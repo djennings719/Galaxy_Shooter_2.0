@@ -26,12 +26,22 @@ public class Enemy : MonoBehaviour
 
     private float _deathAnimationTime = 2.8f;
 
+    private AudioSource _explosionSound;
+
+    [SerializeField]
+    private GameObject _laserPrefab;
+
+    [SerializeField]
+    private float _laserOffset;
+
     // Start is called before the first frame update
     void Start()
     {
         Init();
         _player = GameObject.Find("Player").GetComponent<Player>();
         _animator = gameObject.GetComponent<Animator>();
+        _explosionSound = GameObject.Find("ExplosionSound").GetComponent<AudioSource>();
+
 
         if (_player == null) {
             Debug.Log("Player object not found. Please check and try again.");
@@ -39,7 +49,14 @@ public class Enemy : MonoBehaviour
         if (_animator == null) {
             Debug.Log("Animator object not found.  Please check and try again.");
         }
+        if (_explosionSound == null) {
+            Debug.Log("Explosion sound not found. Please try again.");
+        }
+        if (_laserPrefab == null) {
+            Debug.Log("Laser Prefab not found.  Please try again.");
+        }
 
+        StartCoroutine(FireLaser());
     }
 
     // Update is called once per frame
@@ -87,6 +104,11 @@ public class Enemy : MonoBehaviour
             WaitAndDestroyEnemy();
         }
         else if (other.tag == "Laser") {
+            Laser laser = other.GetComponent<Laser>();
+            if (laser.IsEnemyLaser)
+            {
+                return;
+            }
             Destroy(other.gameObject);
            
             if (_player != null)
@@ -98,9 +120,21 @@ public class Enemy : MonoBehaviour
     }
 
     private void WaitAndDestroyEnemy() {
+        Destroy(GetComponent<Collider2D>());
         _speed = 0.4f;
         _animator.SetTrigger("OnEnemyDeath");
+        _explosionSound.Play();
         Destroy(gameObject, _deathAnimationTime);
+    }
+
+    IEnumerator FireLaser()
+    {
+        while (true)
+        {
+            Vector3 offset = new Vector3(0, _laserOffset, 0);
+            Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity, transform);
+            yield return new WaitForSeconds(Random.Range(3f, 7f));
+        }
     }
 
 }
