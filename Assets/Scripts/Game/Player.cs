@@ -60,6 +60,9 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _explosion;
+
+    [SerializeField]
+    private float _boosterAdjustment = 1f;
     
     // Start is called before the first frame update
     void Start()
@@ -114,6 +117,20 @@ public class Player : MonoBehaviour
         {
             FireLaser();
         }
+
+        
+    }
+
+    private void BoosterCheck() {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            _boosterAdjustment = 3.0f;
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            _boosterAdjustment = 1f;
+        }
     }
 
     private void SetPlayerStartingLocation() {
@@ -123,13 +140,16 @@ public class Player : MonoBehaviour
 
     //Simple Player Movement
     private void Movement() {
+
+        BoosterCheck();
+
         //horizontal input
         float horizontal = Input.GetAxis("Horizontal") * _horizontalSpeed;
         //vertical input 
         float vertical = Input.GetAxis("Vertical") * _verticalSpeed;
 
         Vector3 translateVector = new Vector3(horizontal, vertical, 0);
-        transform.Translate(translateVector * Time.deltaTime * (_isSpeedBoostEnabled ? _speedBoost : 1));
+        transform.Translate(translateVector * Time.deltaTime * (_isSpeedBoostEnabled ? _speedBoost : 1) * _boosterAdjustment);
 
         BoundaryController();
     }
