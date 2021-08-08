@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    public enum PowerUpTags { TripleShotPowerUp, SpeedBoostPowerUp, ShieldsPowerUp }
+    public enum PowerUpTags { TripleShotPowerUp, SpeedBoostPowerUp, ShieldsPowerUp, AmmoPowerUp }
     [SerializeField]
     private AudioClip _powerUpSound;
 
@@ -47,6 +47,9 @@ public class PowerUp : MonoBehaviour
                         break;
                     case PowerUpTags.ShieldsPowerUp:
                         player.SetPowerUp(PowerUpTags.ShieldsPowerUp);
+                        break;
+                    case PowerUpTags.AmmoPowerUp:
+                        player.SetPowerUp(PowerUpTags.AmmoPowerUp);
                         break;
                     default:
                         break;

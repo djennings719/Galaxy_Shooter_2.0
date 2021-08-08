@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Ammo : MonoBehaviour
 {
-    private int _ammoCount = 15;
+    private int _ammoCount;
+
+    private const int AmmoAmount = 15;
+
+    private void Start()
+    {
+        Reset();
+    }
 
     public int AmmoCount {
         get { return _ammoCount; }
@@ -18,5 +25,10 @@ public class Ammo : MonoBehaviour
 
     public void UpdateAmmoCount() {
         _ammoCount--;        
+    }
+
+    public void Reset()
+    {
+        _ammoCount = AmmoAmount;
     }
 }
