@@ -244,6 +244,10 @@ public class Player : MonoBehaviour
             case PowerUp.PowerUpTags.ShieldsPowerUp:
                 _theShield.IsShieldEnabled = true;
                 break;
+            case PowerUp.PowerUpTags.AmmoPowerUp:
+                _ammo.Reset();
+                _uiManager.UpdateAmmo(_ammo.AmmoCount);
+                break;
             default:
                 break;
         }
