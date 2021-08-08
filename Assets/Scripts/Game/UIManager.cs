@@ -7,7 +7,12 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private Text _scoreText; 
+    private Text _scoreText;
+
+    [SerializeField]
+    private Text _ammoText;
+
+    private Color[] ammoTextColors;
 
     [SerializeField]
     private Sprite[] _lifeSprites;
@@ -31,8 +36,15 @@ public class UIManager : MonoBehaviour
         _gameOverText.gameObject.SetActive(false);
         _restartGameText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        InitAmmoTextColors();
+
         if (_scoreText == null) {
             Debug.Log("ScoreText component has not been set.  Please set the Score Text component and try again.");
+        }
+
+        if (_ammoText == null) {
+            Debug.Log("AmmoText component has not been set.  Please set the Ammo Text component and try again.");
         }
 
         if (_gameOverText == null) {
@@ -48,6 +60,16 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void InitAmmoTextColors() {
+        ammoTextColors = new Color [] { Color.white, Color.magenta, Color.red};
+    }
+
+    private enum AmmoLevels {
+        Good,
+        Warning,
+        Bad
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -56,6 +78,19 @@ public class UIManager : MonoBehaviour
 
     public void UpdateScore(int score) {
         _scoreText.text = score.ToString();
+    }
+
+    public void UpdateAmmo(int ammoCount) {
+        _ammoText.text = ammoCount.ToString();
+        if (ammoCount > 5) {
+            _ammoText.color = ammoTextColors[(int)AmmoLevels.Good];
+        }
+        else if (ammoCount > 0) {
+            _ammoText.color = ammoTextColors[(int)AmmoLevels.Warning];
+        }
+        else {
+            _ammoText.color = ammoTextColors[(int)AmmoLevels.Bad];
+        }
     }
 
     public void UpdateLives(int life) {

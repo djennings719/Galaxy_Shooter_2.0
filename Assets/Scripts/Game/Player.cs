@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -64,6 +65,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float _boosterAdjustment = 1f;
+
+    private Ammo _ammo;
     
     // Start is called before the first frame update
     void Start()
@@ -71,6 +74,7 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
+        _ammo = GetComponent<Ammo>();
         
         if (_spawnManager == null) {
             Debug.Log("SpawnManager not found.");
@@ -118,7 +122,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        if ( Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
         }        
@@ -172,12 +176,25 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void FireLaser() {    
-        _canFire = Time.time + _fireRate;
-        Vector3 offsetPosition = new Vector3(0, _laserOffset, 0);
-        Instantiate(_isTripleShotEnabled ? _tripleShotPrefab : _laserPrefab, transform.position + offsetPosition, Quaternion.identity);
-        _audioSource.clip = _laserSound;
-        _audioSource.Play();
+    private void FireLaser() {
+        if (_ammo.DoesPlayerHaveAmmo)
+        {
+            _canFire = Time.time + _fireRate;
+            Vector3 offsetPosition = new Vector3(0, _laserOffset, 0);
+            Instantiate(_isTripleShotEnabled ? _tripleShotPrefab : _laserPrefab, transform.position + offsetPosition, Quaternion.identity);
+            _audioSource.clip = _laserSound;
+            _audioSource.Play();
+            _ammo.UpdateAmmoCount();
+            _uiManager.UpdateAmmo(_ammo.AmmoCount);
+        }
+        else {
+            PlayerOutOfAmmo();
+        }
+    }
+
+    private void PlayerOutOfAmmo() {
+        EditorApplication.Beep();
+        //TODO: add UI component to announce out of ammo
     }
 
     public void DamagePlayer() {

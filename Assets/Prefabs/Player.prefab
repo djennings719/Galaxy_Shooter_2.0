@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4053538829983430648}
   - component: {fileID: 1452925926914321489}
   - component: {fileID: 832943450808941616}
+  - component: {fileID: -1758175524801760876}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -141,6 +142,19 @@ MonoBehaviour:
   _rightDamage: {fileID: 5312766608651633901}
   _laserSound: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _explosion: {fileID: 338870319463890037, guid: 34aba44fe5e8bf24fb3404abf28ec57d, type: 3}
+  _boosterAdjustment: 1
+--- !u!114 &-1758175524801760876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4249042902819518361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbda56ce41b6f44eb3ed4808024afb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4941628674358196922
 PrefabInstance:
   m_ObjectHideFlags: 0
