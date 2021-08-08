@@ -63,6 +63,9 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float _boosterAdjustment = 1f;
+
+    [SerializeField]
+    private int _shieldLives = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -116,11 +119,10 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
-        }
-
-        
+        }        
     }
 
+    //checks for Left-Shift key and adjusts booster as necessary
     private void BoosterCheck() {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -179,18 +181,45 @@ public class Player : MonoBehaviour
     public void DamagePlayer() {
         //simple single use shield
         if (_isShieldEnabled) {
-            SetShieldEnabled(false);
+            SetShieldDamage();
             return;
         }
 
         _lives--;
         _uiManager.UpdateLives(_lives);
         Instantiate(_explosion, transform.position, Quaternion.identity);
-        SetDamage();
+        SetPlayerDamage();
         CheckLives();
     }
 
-    private void SetDamage() {
+    private void SetShieldDamage() {
+        _shieldLives--;
+
+        //change color
+        if (_shieldLives == 0)
+        {
+            SetShieldEnabled(false);
+        }
+        else {
+            SetShieldColor();
+        }
+    }
+
+    private void SetShieldColor() {
+        SpriteRenderer renderer = _shield.GetComponent<SpriteRenderer>();
+        if (_shieldLives == 3)
+        {
+            renderer.color = new Color(1f, 1f, 1f, 1f);
+        }
+        else if (_shieldLives == 2) {
+            renderer.color = new Color(.7f, .7f, .7f, 1f);
+        }        
+        else if (_shieldLives == 1) {
+            renderer.color = new Color(.3f, .3f, .3f, 1f);
+        }
+    }
+
+    private void SetPlayerDamage() {
         if (_lives == 2)
         {
             _leftDamage.SetActive(true);
@@ -222,7 +251,8 @@ public class Player : MonoBehaviour
                 break;
             case PowerUp.PowerUpTags.ShieldsPowerUp:
                 SetShieldEnabled(true);
-                StartCoroutine(ShieldPowerDown());
+                _shieldLives = 3;
+                SetShieldColor();
                 break;
             default:
                 break;
