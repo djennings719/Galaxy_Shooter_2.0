@@ -35,12 +35,13 @@ public class Player : MonoBehaviour
     private bool _isTripleShotEnabled = false;
     [SerializeField]
     private bool _isSpeedBoostEnabled = false;
-    private bool _isShieldEnabled = false;
 
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
     private GameObject _shield;
+
+    private Shield _theShield;
 
     [SerializeField]
     private int _score;
@@ -63,9 +64,6 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float _boosterAdjustment = 1f;
-
-    [SerializeField]
-    private int _shieldLives = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -73,7 +71,7 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
-
+        
         if (_spawnManager == null) {
             Debug.Log("SpawnManager not found.");
         }
@@ -89,6 +87,10 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Shield GameObject has not been set.  Please set the GameObject and try again.");
         }
+        else {
+            _theShield = _shield.GetComponent<Shield>();
+        }
+
         if (_uiManager == null) {
             Debug.Log("UI Manager has not been set.  Please set the GameObject and try again.");
         }
@@ -180,8 +182,8 @@ public class Player : MonoBehaviour
 
     public void DamagePlayer() {
         //simple single use shield
-        if (_isShieldEnabled) {
-            SetShieldDamage();
+        if (_theShield.IsShieldEnabled) {
+            _theShield.SetShieldDamage();
             return;
         }
 
@@ -190,33 +192,6 @@ public class Player : MonoBehaviour
         Instantiate(_explosion, transform.position, Quaternion.identity);
         SetPlayerDamage();
         CheckLives();
-    }
-
-    private void SetShieldDamage() {
-        _shieldLives--;
-
-        //change color
-        if (_shieldLives == 0)
-        {
-            SetShieldEnabled(false);
-        }
-        else {
-            SetShieldColor();
-        }
-    }
-
-    private void SetShieldColor() {
-        SpriteRenderer renderer = _shield.GetComponent<SpriteRenderer>();
-        if (_shieldLives == 3)
-        {
-            renderer.color = new Color(1f, 1f, 1f, 1f);
-        }
-        else if (_shieldLives == 2) {
-            renderer.color = new Color(.7f, .7f, .7f, 1f);
-        }        
-        else if (_shieldLives == 1) {
-            renderer.color = new Color(.3f, .3f, .3f, 1f);
-        }
     }
 
     private void SetPlayerDamage() {
@@ -250,9 +225,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(SpeedBoostPowerDown());
                 break;
             case PowerUp.PowerUpTags.ShieldsPowerUp:
-                SetShieldEnabled(true);
-                _shieldLives = 3;
-                SetShieldColor();
+                _theShield.IsShieldEnabled = true;
                 break;
             default:
                 break;
@@ -267,16 +240,6 @@ public class Player : MonoBehaviour
     IEnumerator SpeedBoostPowerDown() {
         yield return new WaitForSeconds(Random.Range(1.2f, 5.5f));
         _isSpeedBoostEnabled = false;
-    }
-
-    IEnumerator ShieldPowerDown() {
-        yield return new WaitForSeconds(Random.Range(1.2f, 5.5f));
-        SetShieldEnabled(false);
-    }
-
-    private void SetShieldEnabled(bool isEnabled) {
-        _isShieldEnabled = isEnabled;
-        _shield.SetActive(isEnabled);
     }
 
     public void UpdateScore()

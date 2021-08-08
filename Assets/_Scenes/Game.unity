@@ -1156,6 +1156,24 @@ MonoBehaviour:
   _lifeImage: {fileID: 167038823}
   _gameOverText: {fileID: 1254775953}
   _restartGameText: {fileID: 1136851072}
+--- !u!1 &1590527731 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6608756783421182596, guid: ac12b6fded41b5e44b761f350e7f8631, type: 3}
+  m_PrefabInstance: {fileID: 7296578618623890455}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1590527735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590527731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 597d3818708730742bf2b7900b5ddc9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shieldLives: 0
 --- !u!1 &1596809849
 GameObject:
   m_ObjectHideFlags: 0
