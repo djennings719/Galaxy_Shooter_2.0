@@ -12,8 +12,7 @@ public class Shield : MonoBehaviour
     public bool IsShieldEnabled {
         get { return _isShieldEnabled; }
         set {
-            _isShieldEnabled = value;
-            SetShieldEnabled(true);
+            SetShieldEnabled(value);
         }
     }
 
@@ -51,9 +50,10 @@ public class Shield : MonoBehaviour
 
     private void SetShieldEnabled(bool isEnabled)
     {
-        //_isShieldEnabled = isEnabled;
         gameObject.SetActive(isEnabled);
-        if (isEnabled) {
+        _isShieldEnabled = isEnabled;
+        if (isEnabled)
+        {
             _shieldLives = 3;
             SetShieldColor();
         }
