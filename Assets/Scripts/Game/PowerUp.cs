@@ -5,7 +5,13 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    public enum PowerUpTags { TripleShotPowerUp, SpeedBoostPowerUp, ShieldsPowerUp, AmmoPowerUp }
+    public enum PowerUpTags {
+        TripleShotPowerUp,
+        SpeedBoostPowerUp,
+        ShieldsPowerUp,
+        AmmoPowerUp,
+        HealthPowerUp
+    }
     [SerializeField]
     private AudioClip _powerUpSound;
 
@@ -40,22 +46,24 @@ public class PowerUp : MonoBehaviour
             if (player != null) {
                 switch (Enum.Parse(typeof(PowerUpTags), gameObject.tag)) {
                     case PowerUpTags.TripleShotPowerUp:
-                        player.SetPowerUp(PowerUpTags.TripleShotPowerUp);
+                        player.CollectTripleShot();
                         break;
                     case PowerUpTags.SpeedBoostPowerUp:
-                        player.SetPowerUp(PowerUpTags.SpeedBoostPowerUp);
+                        player.CollectSpeed();
                         break;
                     case PowerUpTags.ShieldsPowerUp:
-                        player.SetPowerUp(PowerUpTags.ShieldsPowerUp);
+                        player.CollectShield();
                         break;
                     case PowerUpTags.AmmoPowerUp:
-                        player.SetPowerUp(PowerUpTags.AmmoPowerUp);
+                        player.CollectAmmo();
+                        break;
+                    case PowerUpTags.HealthPowerUp:
+                        player.CollectHealth();
                         break;
                     default:
                         break;
                 }
                 AudioSource.PlayClipAtPoint(_powerUpSound, other.transform.position);
-                //_powerUpSound.Play();
             }
             Destroy(gameObject);
         }

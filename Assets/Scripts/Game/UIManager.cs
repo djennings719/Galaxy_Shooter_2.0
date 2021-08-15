@@ -94,7 +94,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void UpdateLives(int life) {
-        if (life < 0) { return; }
+        if (life < 0 || life > 3) { return; }
         _lifeImage.sprite = _lifeSprites[life];
     }
 
