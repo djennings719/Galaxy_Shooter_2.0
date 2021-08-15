@@ -212,9 +212,14 @@ public class Player : MonoBehaviour
     }
 
     private void SetPlayerDamage() {
-        if (_lives == 2)
+        if (_lives > 2)
+        {
+            _leftDamage.SetActive(false);
+        }
+        else if (_lives == 2)
         {
             _leftDamage.SetActive(true);
+            _rightDamage.SetActive(false);
         }
         else if (_lives == 1)
         {
@@ -228,29 +233,6 @@ public class Player : MonoBehaviour
             _uiManager.GameOver();
             Destroy(gameObject);
         }        
-    }
-
-    public void SetPowerUp(PowerUp.PowerUpTags powerUp) {
-
-        switch (powerUp) {
-            case PowerUp.PowerUpTags.TripleShotPowerUp:
-                _isTripleShotEnabled = true;
-                StartCoroutine(TripleShotPowerDown());
-                break;
-            case PowerUp.PowerUpTags.SpeedBoostPowerUp:
-                _isSpeedBoostEnabled = true;
-                StartCoroutine(SpeedBoostPowerDown());
-                break;
-            case PowerUp.PowerUpTags.ShieldsPowerUp:
-                _theShield.IsShieldEnabled = true;
-                break;
-            case PowerUp.PowerUpTags.AmmoPowerUp:
-                _ammo.Reset();
-                _uiManager.UpdateAmmo(_ammo.AmmoCount);
-                break;
-            default:
-                break;
-        }
     }
 
     IEnumerator TripleShotPowerDown() {
@@ -279,5 +261,32 @@ public class Player : MonoBehaviour
                 DamagePlayer();
             }
         }
+    }
+
+    public void CollectHealth() {
+        if (_lives < 3) {
+            _lives++;
+            _uiManager.UpdateLives(_lives);
+            SetPlayerDamage();
+        }
+    }
+
+    public void CollectAmmo() {
+        _ammo.Reset();
+        _uiManager.UpdateAmmo(_ammo.AmmoCount);
+    }
+
+    public void CollectShield() {
+        _theShield.IsShieldEnabled = true;
+    }
+
+    public void CollectSpeed() {
+        _isSpeedBoostEnabled = true;
+        StartCoroutine(SpeedBoostPowerDown());
+    }
+
+    public void CollectTripleShot() {
+        _isTripleShotEnabled = true;
+        StartCoroutine(TripleShotPowerDown());
     }
 }

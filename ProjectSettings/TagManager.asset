@@ -12,6 +12,7 @@ TagManager:
   - Shield
   - Asteroid
   - AmmoPowerUp
+  - HealthPowerUp
   layers:
   - Default
   - TransparentFX
