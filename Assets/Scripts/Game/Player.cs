@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -67,7 +68,13 @@ public class Player : MonoBehaviour
     private float _boosterAdjustment = 1f;
 
     private Ammo _ammo;
-    
+
+    [SerializeField]
+    private GameObject _multiDirectionalLaserPrefab;
+
+    [SerializeField]
+    private bool _isMultiDirectionalLaserEnabled;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,7 +82,7 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
         _ammo = GetComponent<Ammo>();
-        
+
         if (_spawnManager == null) {
             Debug.Log("SpawnManager not found.");
         }
@@ -116,16 +123,19 @@ public class Player : MonoBehaviour
         if (_explosion == null) {
             Debug.Log("Explosion not found.  Please try again.");
         }
+        if (_multiDirectionalLaserPrefab == null) {
+            Debug.Log("Multi Directional Laser Prefab not found.  Please try again.");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         Movement();
-        if ( Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
-        }        
+        }
     }
 
     //checks for Left-Shift key and adjusts booster as necessary
@@ -181,7 +191,7 @@ public class Player : MonoBehaviour
         {
             _canFire = Time.time + _fireRate;
             Vector3 offsetPosition = new Vector3(0, _laserOffset, 0);
-            Instantiate(_isTripleShotEnabled ? _tripleShotPrefab : _laserPrefab, transform.position + offsetPosition, Quaternion.identity);
+            Instantiate(SpawnFinder(), transform.position + offsetPosition, Quaternion.identity);
             _audioSource.clip = _laserSound;
             _audioSource.Play();
             _ammo.UpdateAmmoCount();
@@ -190,6 +200,16 @@ public class Player : MonoBehaviour
         else {
             PlayerOutOfAmmo();
         }
+    }
+
+    private GameObject SpawnFinder() {
+        if (_isTripleShotEnabled) {
+            return _tripleShotPrefab;
+        }
+        else if (_isMultiDirectionalLaserEnabled) {
+            return _multiDirectionalLaserPrefab;
+        }
+        return _laserPrefab;
     }
 
     private void PlayerOutOfAmmo() {
@@ -232,17 +252,22 @@ public class Player : MonoBehaviour
             _spawnManager.IsAlive = false;
             _uiManager.GameOver();
             Destroy(gameObject);
-        }        
+        }
     }
 
     IEnumerator TripleShotPowerDown() {
-        yield return new WaitForSeconds(Random.Range(1.2f, 5.5f));        
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1.2f, 5.5f));
         _isTripleShotEnabled = false;
     }
 
     IEnumerator SpeedBoostPowerDown() {
-        yield return new WaitForSeconds(Random.Range(1.2f, 5.5f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1.2f, 5.5f));
         _isSpeedBoostEnabled = false;
+    }
+
+    IEnumerator MultiDirectionalShotPowerDown() {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1.2f, 5.5f));
+        _isMultiDirectionalLaserEnabled = false;
     }
 
     public void UpdateScore()
@@ -288,5 +313,11 @@ public class Player : MonoBehaviour
     public void CollectTripleShot() {
         _isTripleShotEnabled = true;
         StartCoroutine(TripleShotPowerDown());
+    }
+
+    public void CollectMultiDirection()
+    {
+        _isMultiDirectionalLaserEnabled = true;
+        StartCoroutine(MultiDirectionalShotPowerDown());
     }
 }
