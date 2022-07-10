@@ -10,7 +10,8 @@ public class PowerUp : MonoBehaviour
         SpeedBoostPowerUp,
         ShieldsPowerUp,
         AmmoPowerUp,
-        HealthPowerUp
+        HealthPowerUp,
+        MultiDirectionShotPowerUp
     }
     [SerializeField]
     private AudioClip _powerUpSound;
@@ -59,6 +60,9 @@ public class PowerUp : MonoBehaviour
                         break;
                     case PowerUpTags.HealthPowerUp:
                         player.CollectHealth();
+                        break;
+                    case PowerUpTags.MultiDirectionShotPowerUp:
+                        player.CollectMultiDirection();
                         break;
                     default:
                         break;

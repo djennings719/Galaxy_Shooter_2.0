@@ -13,6 +13,7 @@ TagManager:
   - Asteroid
   - AmmoPowerUp
   - HealthPowerUp
+  - MultiDirectionShotPowerUp
   layers:
   - Default
   - TransparentFX

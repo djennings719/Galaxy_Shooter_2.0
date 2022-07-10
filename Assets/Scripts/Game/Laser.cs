@@ -10,6 +10,12 @@ public class Laser : MonoBehaviour
     [SerializeField]
     private bool _isEnemyLaser = false;
 
+    [SerializeField]
+    private bool _isMultiDirectional = false;
+
+    [SerializeField]
+    private bool _isLeft = false;
+
     public bool IsEnemyLaser {
         get { return _isEnemyLaser; }
     }
@@ -17,11 +23,21 @@ public class Laser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        if (_isMultiDirectional) {
+            MovementDirectional();
+        }
+        else {
+            Movement();
+        }
     }
 
     private void Movement() {
         transform.Translate((IsEnemyLaser ? Vector3.down : Vector3.up) * Time.deltaTime * _laserSpeed);
+        DestroyIfOutOfBounds();
+    }
+
+    private void MovementDirectional() {
+        transform.Translate(new Vector3(_isLeft ? -.3f : .3f, 1f) * Time.deltaTime * _laserSpeed);
         DestroyIfOutOfBounds();
     }
 
