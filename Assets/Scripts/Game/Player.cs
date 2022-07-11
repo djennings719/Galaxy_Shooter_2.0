@@ -19,6 +19,10 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
 
+    private float _canThrustBoost = 10f;
+    private float _thrustBoostIncrement = .1f;
+    private bool _refreshingBoost = false;
+
     private float _laserOffset = 1.05f;
 
     private float _playerMaxX = 11.5f;
@@ -140,16 +144,40 @@ public class Player : MonoBehaviour
 
     //checks for Left-Shift key and adjusts booster as necessary
     private void BoosterCheck() {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
+        //if (Input.GetKeyDown(KeyCode.LeftShift) && _canThrustBoost > 0f)
+        //{
+        //   _boosterAdjustment = 3.0f;
+        //    Debug.Log("KeyDown and _canThrust");
+        //}
+
+        if (Input.GetKey(KeyCode.LeftShift) && _canThrustBoost > 0f) {
             _boosterAdjustment = 3.0f;
+            _canThrustBoost -= _thrustBoostIncrement;
+            _uiManager.UpdateThrustComponent(_canThrustBoost);
+            Debug.Log("GetKey");
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             _boosterAdjustment = 1f;
+            Debug.Log("KeyUp");
+        }
+
+        if (_canThrustBoost <= 0f && !_refreshingBoost) {
+            _refreshingBoost = true;
+            _boosterAdjustment = 1f;
+            StartCoroutine(RefreshThrustBoost());
+            Debug.Log("_canThrustBoost is empty");
         }
     }
+
+    private IEnumerator RefreshThrustBoost() {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1.2f, 5.5f));
+        _uiManager.UpdateThrustComponent(10f);
+        _canThrustBoost = 10f;
+        _refreshingBoost = false;
+    }
+
 
     private void SetPlayerStartingLocation() {
         //set Player to starting position 

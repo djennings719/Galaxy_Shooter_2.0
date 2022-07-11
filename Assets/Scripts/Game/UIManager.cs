@@ -29,7 +29,13 @@ public class UIManager : MonoBehaviour
     private float _blinkerTimer = .5f;
 
     private GameManager _gameManager;
- 
+
+    [SerializeField]
+    private Slider _thrustSlider;
+
+    [SerializeField]
+    private Text _thrustText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +63,14 @@ public class UIManager : MonoBehaviour
 
         if (_gameManager == null) {
             Debug.Log("Game Manager not found.  Please check and try again.");
+        }
+
+        if (_thrustSlider == null) {
+            Debug.Log("Thrust Slider not found.  Please check and try again.");
+        }
+
+        if (_thrustText == null) {
+            Debug.Log("Thrust Text not found.  Please check and try again.");
         }
     }
 
@@ -126,4 +140,11 @@ public class UIManager : MonoBehaviour
             EnableGameOverText(!_gameOverText.gameObject.activeInHierarchy);
         }
     }
+
+    public void UpdateThrustComponent(float thrustValue) {
+        _thrustSlider.value = thrustValue;
+        _thrustText.text = (thrustValue > 0 ? thrustValue : 0f).ToString();
+    }
+
+   
 }
