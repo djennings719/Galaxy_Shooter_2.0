@@ -2538,6 +2538,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 832943450808941616, guid: ac12b6fded41b5e44b761f350e7f8631, type: 3}
+      propertyPath: _camera
+      value: 
+      objectReference: {fileID: 1175039189}
+    - target: {fileID: 832943450808941616, guid: ac12b6fded41b5e44b761f350e7f8631, type: 3}
       propertyPath: _multiDirectionalLaserPrefab
       value: 
       objectReference: {fileID: 1938611967350613303, guid: 71b9a605e404a034e9dca7d298f5e9cc, type: 3}
