@@ -12,6 +12,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _ammoText;
 
+    [SerializeField]
+    private Text _maxAmmoText;
+
     private Color[] ammoTextColors;
 
     [SerializeField]
@@ -54,6 +57,10 @@ public class UIManager : MonoBehaviour
 
         if (_ammoText == null) {
             Debug.Log("AmmoText component has not been set.  Please set the Ammo Text component and try again.");
+        }
+
+        if (_maxAmmoText == null) {
+            Debug.Log("MaxAmmoText component has not been set.  Please check and try again.");
         }
 
         if (_gameOverText == null) {
