@@ -36,12 +36,15 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _thrustText;
 
+    private Camera _camera;
+
     // Start is called before the first frame update
     void Start()
     {
         _gameOverText.gameObject.SetActive(false);
         _restartGameText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _camera = Camera.main;
 
         InitAmmoTextColors();
 
@@ -82,12 +85,6 @@ public class UIManager : MonoBehaviour
         Good,
         Warning,
         Bad
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void UpdateScore(int score) {
@@ -146,5 +143,21 @@ public class UIManager : MonoBehaviour
         _thrustText.text = (thrustValue > 0 ? thrustValue : 0f).ToString();
     }
 
-   
+    public void ShakeCamera() {
+        StartCoroutine(ShakeCameraCoRoutine());
+    }
+
+    private IEnumerator ShakeCameraCoRoutine()
+    {
+        Vector3 startingLocation = _camera.transform.position;
+        _camera.transform.Translate(Vector3.up * 1);
+        yield return new WaitForSeconds(.05f);
+        _camera.transform.Translate(Vector3.left * 1);
+        yield return new WaitForSeconds(.05f);
+        _camera.transform.Translate(Vector3.right * 1);
+        yield return new WaitForSeconds(.05f);
+        _camera.transform.Translate(Vector3.down * 1);
+    }
+
+
 }

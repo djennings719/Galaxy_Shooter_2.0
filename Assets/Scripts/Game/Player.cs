@@ -144,30 +144,21 @@ public class Player : MonoBehaviour
 
     //checks for Left-Shift key and adjusts booster as necessary
     private void BoosterCheck() {
-        //if (Input.GetKeyDown(KeyCode.LeftShift) && _canThrustBoost > 0f)
-        //{
-        //   _boosterAdjustment = 3.0f;
-        //    Debug.Log("KeyDown and _canThrust");
-        //}
-
         if (Input.GetKey(KeyCode.LeftShift) && _canThrustBoost > 0f) {
             _boosterAdjustment = 3.0f;
             _canThrustBoost -= _thrustBoostIncrement;
             _uiManager.UpdateThrustComponent(_canThrustBoost);
-            Debug.Log("GetKey");
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             _boosterAdjustment = 1f;
-            Debug.Log("KeyUp");
         }
 
         if (_canThrustBoost <= 0f && !_refreshingBoost) {
             _refreshingBoost = true;
             _boosterAdjustment = 1f;
             StartCoroutine(RefreshThrustBoost());
-            Debug.Log("_canThrustBoost is empty");
         }
     }
 
@@ -177,7 +168,6 @@ public class Player : MonoBehaviour
         _canThrustBoost = 10f;
         _refreshingBoost = false;
     }
-
 
     private void SetPlayerStartingLocation() {
         //set Player to starting position 
@@ -245,9 +235,11 @@ public class Player : MonoBehaviour
         //TODO: add UI component to announce out of ammo
     }
 
-    public void DamagePlayer() {
+    public void DamagePlayer()
+    {
         //simple single use shield
-        if (_theShield.IsShieldEnabled) {
+        if (_theShield.IsShieldEnabled)
+        {
             _theShield.SetShieldDamage();
             return;
         }
@@ -257,6 +249,7 @@ public class Player : MonoBehaviour
         Instantiate(_explosion, transform.position, Quaternion.identity);
         SetPlayerDamage();
         CheckLives();
+        _uiManager.ShakeCamera();
     }
 
     private void SetPlayerDamage() {
