@@ -341,4 +341,17 @@ public class Player : MonoBehaviour
         _isMultiDirectionalLaserEnabled = true;
         StartCoroutine(MultiDirectionalShotPowerDown());
     }
+
+    public void CollectSkullOfDoomPowerUp() {
+        StartCoroutine(SkullOfDoomPowerDown());
+    }
+
+    private IEnumerator SkullOfDoomPowerDown() {
+        int shots = _ammo.AmmoCount;
+        _ammo.AmmoCount = 0;
+        _uiManager.UpdateAmmo(0);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1.5f, 3f));
+        _ammo.AmmoCount = shots;
+        _uiManager.UpdateAmmo(shots);
+    }
 }

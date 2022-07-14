@@ -15,7 +15,7 @@ public class Ammo : MonoBehaviour
 
     public int AmmoCount {
         get { return _ammoCount; }
-        private set { }
+        set { _ammoCount = value; }
     }
 
     public bool DoesPlayerHaveAmmo {
