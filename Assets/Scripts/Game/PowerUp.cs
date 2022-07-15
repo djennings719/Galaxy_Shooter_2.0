@@ -11,7 +11,8 @@ public class PowerUp : MonoBehaviour
         ShieldsPowerUp,
         AmmoPowerUp,
         HealthPowerUp,
-        MultiDirectionShotPowerUp
+        MultiDirectionShotPowerUp,
+        SkullOfDoomPowerUp
     }
     [SerializeField]
     private AudioClip _powerUpSound;
@@ -64,9 +65,12 @@ public class PowerUp : MonoBehaviour
                     case PowerUpTags.MultiDirectionShotPowerUp:
                         player.CollectMultiDirection();
                         break;
+                    case PowerUpTags.SkullOfDoomPowerUp:
+                        player.CollectSkullOfDoomPowerUp();
+                        break;
                     default:
                         break;
-                }
+                }        
                 AudioSource.PlayClipAtPoint(_powerUpSound, other.transform.position);
             }
             Destroy(gameObject);

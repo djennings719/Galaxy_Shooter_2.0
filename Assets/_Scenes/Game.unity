@@ -2166,6 +2166,7 @@ MonoBehaviour:
   - {fileID: 2904117039477336057, guid: bdf25a3718ac86047a7fb8ec98384b38, type: 3}
   - {fileID: 7006686475020119871, guid: 437bf83a685a6064c896f5b9fe764560, type: 3}
   - {fileID: 6403580205027259537, guid: eb06ee70b73c78744856b6a72746770e, type: 3}
+  - {fileID: 1021417928722828092, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
   _rarePowerUpPrefabs:
   - {fileID: 1740580305684314320, guid: ff4709eb591643c4481ae40ecf571f4f, type: 3}
   commonEnemySpawnMin: 0.5
@@ -2634,6 +2635,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144580281}
   m_CullTransparentMesh: 1
+--- !u!1001 &1021417929361505647
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1021417928722828089, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1021417928722828089, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1021417928722828089, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1021417928722828089, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.8054075
+      objectReference: {fileID: 0}
+    - target: {fileID: 1021417928722828089, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1021417928722828089, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1021417928722828089, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1021417928722828089, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1021417928722828089, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1021417928722828089, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1021417928722828089, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1021417928722828092, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
+      propertyPath: m_Name
+      value: SkullOfDoomPowerUp
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5b7b184a78cbb2f4aa29971f19c79b30, type: 3}
 --- !u!1001 &6120434351636689733
 PrefabInstance:
   m_ObjectHideFlags: 0
