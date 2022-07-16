@@ -37,6 +37,11 @@ public class Player : MonoBehaviour
     private float _speedBoost = 3.0f;
 
     private SpawnManager _spawnManager;
+
+    public SpawnManager GetSpawnManager {
+        get { return _spawnManager; }
+    }
+
     [SerializeField]
     private bool _isTripleShotEnabled = false;
     [SerializeField]
@@ -275,6 +280,12 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void KillEnemy() {
+        _spawnManager.KillEnemy();
+    }
+
+
 
     IEnumerator TripleShotPowerDown() {
         yield return new WaitForSeconds(UnityEngine.Random.Range(1.2f, 5.5f));

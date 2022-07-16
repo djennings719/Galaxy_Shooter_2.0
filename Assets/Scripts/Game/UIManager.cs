@@ -41,6 +41,9 @@ public class UIManager : MonoBehaviour
 
     private Camera _camera;
 
+    [SerializeField]
+    private Text _roundText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -166,5 +169,8 @@ public class UIManager : MonoBehaviour
         _camera.transform.Translate(Vector3.down * 1);
     }
 
+    public void UpdateRound(int round) {
+        _roundText.text = round.ToString();
+    }
 
 }
