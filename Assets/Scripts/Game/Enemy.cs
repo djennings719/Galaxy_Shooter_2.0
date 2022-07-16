@@ -100,6 +100,7 @@ public class Enemy : MonoBehaviour
             if (player != null) {
                 player.DamagePlayer();
                 player.UpdateScore();
+                player.KillEnemy();
             }
             WaitAndDestroyEnemy();
         }
@@ -114,6 +115,7 @@ public class Enemy : MonoBehaviour
             if (_player != null)
             {
                 _player.UpdateScore();
+                _player.KillEnemy();
             }
             WaitAndDestroyEnemy();
         }

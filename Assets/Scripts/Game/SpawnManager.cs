@@ -26,6 +26,13 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private float rarePowerUpSpawnMax = 15f;
 
+    private WaveSystem _waveSystem;
+    public WaveSystem GetWaveSystem {
+        get { return _waveSystem; }
+    }
+
+    private UIManager _uiManager;
+
     private IEnumerator coroutine;
 
     private bool _isAlive = true;
@@ -56,6 +63,16 @@ public class SpawnManager : MonoBehaviour
                 Debug.Log("You have not selected a RarePowerUpPrefab for slot number " + i + ". Please supply an object and try again.");
             }
         }
+        _waveSystem = GameObject.Find("WaveSystem").GetComponent<WaveSystem>();
+        if (_waveSystem == null)
+        {
+            Debug.Log("WaveSystem not found.  Please check and try again.");
+        }
+
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_uiManager == null) {
+            Debug.Log("UIManager not found. Please check and try again.");
+        }
     }
 
     public void StartSpawning() {
@@ -64,13 +81,39 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(RareSpawner());
     }
 
+    public void CheckEnemyLives() {
+        if (_waveSystem.IsRoundOver) {
+            StartCoroutine(StartNextRound());
+        }
+    }
+
+    public IEnumerator StartNextRound() {
+        yield return new WaitForSeconds(2f);
+        _waveSystem.StartRound();
+        _uiManager.UpdateRound(_waveSystem.Round);
+    }
+
+    public void KillEnemy() {
+        _waveSystem.KillEnemy();
+        CheckEnemyLives();
+    }
+
+    public void StartRound() {
+        _waveSystem.StartRound();
+        _uiManager.UpdateRound(_waveSystem.Round);
+    }
+
     IEnumerator SpawnEnemyAndWait()
     {
         yield return new WaitForSeconds(Random.Range(commonEnemySpawnMin, commonEnemySpawnMax));
         while (_isAlive)
         {
-            Instantiate(_enemyPrefab,_newParentContainer.transform);
-            yield return new WaitForSeconds(Random.Range(commonEnemySpawnMin, commonEnemySpawnMax));        
+            if (_waveSystem.CanSpawn())
+            {
+                Instantiate(_enemyPrefab, _newParentContainer.transform);
+                _waveSystem.SpawnEnemy();
+            }
+            yield return new WaitForSeconds(Random.Range(commonEnemySpawnMin, commonEnemySpawnMax));
         }
     }
 
